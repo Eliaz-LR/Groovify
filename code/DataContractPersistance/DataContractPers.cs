@@ -13,30 +13,11 @@ namespace DataContractPersistance
     {
         public string FilePath { get; set; } = Path.Combine(Directory.GetCurrentDirectory(), "JSON");
         public string FileName { get; set; } = "playlists.json";
-        public ObservableCollection<Playlist> ChargeDonnee()
-        {
-            if (!Directory.Exists(FilePath))
-            {
-                throw new FileNotFoundException("le fichier est manquant");
-            }
-            var serializer = new DataContractJsonSerializer(typeof(ObservableCollection<Playlist>));
-            if (!File.Exists(Path.Combine(FilePath, FileName)))
-            {
-                throw new FileNotFoundException("le json est manquant");
-            }
-            ObservableCollection<Playlist> playlists;
-            
-            using (Stream s = File.OpenRead(Path.Combine(FilePath, FileName)))
-            {
-                playlists = serializer.ReadObject(s) as ObservableCollection<Playlist>;
-            }
-            return playlists;
-        }
 
         public void SauvegardeDonnee(ObservableCollection<Playlist> playlists)
         {
             var serializer = new DataContractJsonSerializer(typeof(ObservableCollection<Playlist>));
-            if(!Directory.Exists(FilePath))
+            if (!Directory.Exists(FilePath))
             {
                 Directory.CreateDirectory(FilePath);
             }
@@ -45,6 +26,28 @@ namespace DataContractPersistance
                 serializer.WriteObject(s, playlists);
             }
             Debug.WriteLine("donnees saved");
+        }
+
+        public ObservableCollection<Playlist> ChargeDonnee()
+        {
+            if (!Directory.Exists(FilePath))
+            {
+                //throw new FileNotFoundException("le fichier est manquant");
+                Directory.CreateDirectory(FilePath);
+            }
+            var serializer = new DataContractJsonSerializer(typeof(ObservableCollection<Playlist>));
+            if (!File.Exists(Path.Combine(FilePath, FileName)))
+            {
+                //throw new FileNotFoundException("le json est manquant");
+                SauvegardeDonnee(new ObservableCollection<Playlist>());
+            }
+            ObservableCollection<Playlist> playlists;
+            
+            using (Stream s = File.OpenRead(Path.Combine(FilePath, FileName)))
+            {
+                playlists = serializer.ReadObject(s) as ObservableCollection<Playlist>;
+            }
+            return playlists;
         }
     }
 }
