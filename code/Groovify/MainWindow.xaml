@@ -1,0 +1,67 @@
+﻿<mah:MetroWindow xmlns:Vues="clr-namespace:Groovify.Vues"  x:Class="Groovify.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Groovify"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        ShowTitleBar="True"
+        MouseDown="MetroWindow_MouseDown"
+        Title="Groovify" Height="450" Width="800"
+         >
+    <mah:MetroWindow.LeftWindowCommands>
+        <mah:WindowCommands>
+            <TextBlock Text="Groovify" Foreground="White" HorizontalAlignment="Center"/>
+        </mah:WindowCommands>
+    </mah:MetroWindow.LeftWindowCommands>
+    <mah:MetroWindow.WindowButtonCommands>
+        <mah:WindowButtonCommands/>
+    </mah:MetroWindow.WindowButtonCommands>
+
+    <DockPanel Background="#000000">
+        <Grid DockPanel.Dock="Bottom" Background="#181818">
+            <ContentControl x:Name="MusicPlayer"/>
+        </Grid>
+        <Grid x:Name="gridMenu" Focusable="True" DockPanel.Dock="Left" Margin="2" Background="#000000" Width="150">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <local:SearchBar/>
+            <Button Content="Titre" Click="ChangeVueToVueTitres" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" Grid.Row="1" BorderThickness="0" Background="Transparent" Foreground="White"/>
+            <Button Content="Artiste" Click="ChangeVueToVueArtiste" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" Grid.Row="2" BorderThickness="0" Background="Transparent" Foreground="White"/>
+            <Button Content="Albums" Click="ChangeVueToVueAlbum" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" Grid.Row="3" BorderThickness="0" Background="Transparent" Foreground="White"/>
+            <Grid Grid.Row="4" Margin="0, 25, 0, 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Playlist" Foreground="White" HorizontalAlignment="Left"/>
+                <Button Click="NewPlaylist" Background="Transparent" BorderThickness="0" VerticalAlignment="Top" Height="20" Width="20" Grid.Column="1">
+                    <Image Source="Ressources/Icons/plus-64.png"/>
+                </Button>
+            </Grid>
+            <ListBox ItemsSource="{Binding ListePlaylists}" Name="ListePlaylists" HorizontalContentAlignment="Stretch" Grid.Row="5" Background="Transparent" BorderThickness="0">
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Supprimer" Click="MenuItemDelete_Click"/>
+                    </ContextMenu>
+                </ListBox.ContextMenu>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding Name}" x:Name="BouttonPlaylists" Click="MenuPlaylistVoir" HorizontalContentAlignment="Left" Background="Transparent" Foreground="White" BorderThickness="0"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        <ScrollViewer DockPanel.Dock="Top">
+            <ContentControl x:Name="VuePrincipale"/>
+        </ScrollViewer>
+    </DockPanel>
+</mah:MetroWindow>

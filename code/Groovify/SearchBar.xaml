@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="Groovify.SearchBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Groovify"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <StackPanel>
+        <TextBox x:Name="barreRecherche" LostFocus="barreRecherche_LostFocus" TextChanged="barreRecherche_TextChanged" Foreground="White" Margin="4">
+            <TextBox.Style>
+                <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                    <Style.Resources>
+                        <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                            <VisualBrush.Visual>
+                                <Label Content="Rechercher..." Foreground="White"/>
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Style.Resources>
+                    <Style.Triggers>
+                        <Trigger Property="IsFocused" Value="False">
+                            <Setter Property="Background" Value="Transparent" />
+                        </Trigger>
+                        <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="Background" Value="Transparent" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+        <Popup x:Name="popupResultats" IsOpen="False" PlacementTarget="{Binding ElementName=barreRecherche}" Width="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.ActualWidth}">
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Top" Text="Titres" Foreground="White" Background="Transparent"/>
+                <ListBox x:Name="ListBoxTitres" SelectionChanged="ListBoxTitres_SelectionChanged" DockPanel.Dock="Top" Foreground="White" Background="Transparent"/>
+                <TextBlock DockPanel.Dock="Top" Text="Artistes" Foreground="White" Background="Transparent"/>
+                <ListBox x:Name="ListBoxArtistes" SelectionChanged="ListBoxArtistes_SelectionChanged" DockPanel.Dock="Top" Foreground="White" Background="Transparent"/>
+                <TextBlock DockPanel.Dock="Top" Text="Albums" Foreground="White" Background="Transparent"/>
+                <ListBox x:Name="ListBoxAlbums" SelectionChanged="ListBoxAlbums_SelectionChanged" DockPanel.Dock="Top" Foreground="White" Background="Transparent"/>
+                <TextBlock DockPanel.Dock="Top" Text="Playlists" Foreground="White" Background="Transparent"/>
+                <ListBox x:Name="ListBoxPlaylists" SelectionChanged="ListBoxPlaylists_SelectionChanged" DockPanel.Dock="Top" Foreground="White" Background="Transparent"/>
+            </DockPanel>
+        </Popup>
+    </StackPanel>
+</UserControl>
